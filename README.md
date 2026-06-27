@@ -63,7 +63,7 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 
 ```text
 請用 humanizer-zh-tw-pro 審閱這篇 SEO 頁面。
-不要新增未驗證事實，不要刪掉價格、日期、來源、比較條件或 caveat。
+不要新增未驗證事實，不要刪掉價格、日期、來源、比較條件或但書。
 只輸出可直接發布的正文。
 ```
 
@@ -128,6 +128,12 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 | 33 | 假裝坦白的修辭開場 |
 
 ## 版本紀錄
+
+### 1.0.0-pro.2
+
+- 改寫 skill trigger description，讓 Codex 更容易在「去 AI 味」、humanize、台灣繁中改寫和 SEO 審稿情境中正確觸發。
+- 新增範例使用邊界，明確要求不得從示範句自行補功能、日期、數據、來源、排名或效果。
+- 將 SEO 保護用語中的 `caveat` 改成更自然的「但書」。
 
 ### 1.0.0-pro.1
 
