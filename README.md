@@ -129,6 +129,12 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 
 ## 版本紀錄
 
+### 1.0.0-pro.3
+
+- 強化交付前自檢，明確核對人名、品牌、產品、價格、日期、版本、來源、不確定語氣和限制條件。
+- 補清楚正文與審稿說明的分界，避免把「此處需要來源」或編輯註解混進可發布內容。
+- 收緊範例使用邊界，只有在任務允許查證且已查到來源時，才可加入有來源佐證的新資訊。
+
 ### 1.0.0-pro.2
 
 - 改寫 skill trigger description，讓 Codex 更容易在「去 AI 味」、humanize、台灣繁中改寫和 SEO 審稿情境中正確觸發。
