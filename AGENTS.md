@@ -27,3 +27,8 @@ This repository is a Markdown skill for Codex, Claude Code, OpenCode, and compat
 - Use examples that sound natural to Taiwan readers.
 - Avoid internal prompt language in examples of publishable output.
 - Avoid broad formatting churn.
+
+## Validation
+
+- Run `python3 scripts/validate_repo.py` before committing changes.
+- If `SKILL.md` changes, also run the official skill validator when available.

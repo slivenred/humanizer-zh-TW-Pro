@@ -72,13 +72,13 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 
 這個 repo 另外包含一組維護用 forward-test cases，用來避免後續版本越改越重、或把事實和作者聲音改壞。它不是標準答案集，而是列出每個樣本必須保留、必須避免和人工審閱時要看的行為。
 
-檢查 corpus 格式：
+檢查 repo 與 corpus 一致性：
 
 ```bash
-python3 scripts/validate_forward_cases.py
+python3 scripts/validate_repo.py
 ```
 
-人工 forward-test 時，從 `tests/forward_cases.json` 挑選案例，使用該案例的 `request` 和 `input` 跑一次 skill，再用 `must_preserve`、`must_avoid`、`success_checks` 做審閱。只有在案例暴露明確失敗時，才修改 `SKILL.md`。
+這個總檢查會驗證 `SKILL.md` / `README.md` / `agents/openai.yaml` / `LICENSE` / forward-test corpus 的一致性。人工 forward-test 時，從 `tests/forward_cases.json` 挑選案例，使用該案例的 `request` 和 `input` 跑一次 skill，再用 `must_preserve`、`must_avoid`、`success_checks` 做審閱。只有在案例暴露明確失敗時，才修改 `SKILL.md`。
 
 ## 33 種模式
 
