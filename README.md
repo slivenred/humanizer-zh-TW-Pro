@@ -1,5 +1,7 @@
 # humanizer-zh-TW-Pro
 
+[![Validate](https://github.com/slivenred/humanizer-zh-TW-Pro/actions/workflows/validate.yml/badge.svg)](https://github.com/slivenred/humanizer-zh-TW-Pro/actions/workflows/validate.yml)
+
 台灣繁中版 AI 寫作痕跡清理 skill。  
 它不是 deterministic 改寫程式，而是一份給 Claude Code、Codex、OpenCode 等 agent 使用的編輯規則。效果取決於執行它的模型、原文品質，以及你給的保留條件。
 
