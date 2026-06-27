@@ -11,7 +11,7 @@ allowed-tools:
   - Glob
   - AskUserQuestion
 metadata:
-  version: 1.0.0-pro.3
+  version: 1.0.0-pro.4
   compatibility: codex claude-code opencode
   source: derivative of blader/humanizer v2.8.0, localized for Taiwan Traditional Chinese
 ---
@@ -55,6 +55,10 @@ metadata:
 - 不把「可能、通常、視情況」改成絕對句。
 - 不移除讀者做決策需要的限制、例外或但書。
 - 不在 publishable body 裡留下「我做了哪些修改」「這裡去除 AI 腔」等內部說明。
+
+### 不要硬改的內容
+
+除非使用者明確要求，保留直接引述、訪談逐字稿、法規或合約原文、品牌名、產品名、功能名、UI 標籤、檔名、程式碼、API、命令、錯誤訊息和 SEO 目標關鍵字。這些內容看起來不自然時，優先改周圍說明文字；需要處理這些內容本身時，先標明是在改「引述外的說明」還是「引述本身」。
 
 ### 台灣語感
 
