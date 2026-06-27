@@ -78,6 +78,8 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 python3 scripts/validate_repo.py
 ```
 
+如果本機沒有 PyYAML，先執行 `python3 -m pip install PyYAML`。GitHub Actions 也會在 push 和 pull request 時跑同一個檢查。
+
 這個總檢查會驗證 `SKILL.md` / `README.md` / `agents/openai.yaml` / `LICENSE` / forward-test corpus 的一致性。人工 forward-test 時，從 `tests/forward_cases.json` 挑選案例，使用該案例的 `request` 和 `input` 跑一次 skill，再用 `must_preserve`、`must_avoid`、`success_checks` 做審閱。只有在案例暴露明確失敗時，才修改 `SKILL.md`。
 
 ## 33 種模式

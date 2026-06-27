@@ -20,6 +20,7 @@ SKILL_PATH = ROOT / "SKILL.md"
 README_PATH = ROOT / "README.md"
 OPENAI_YAML_PATH = ROOT / "agents" / "openai.yaml"
 LICENSE_PATH = ROOT / "LICENSE"
+GITHUB_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "validate.yml"
 FORWARD_CASES_VALIDATOR = ROOT / "scripts" / "validate_forward_cases.py"
 EXPECTED_PATTERN_COUNT = 33
 MAX_SKILL_LINES = 500
@@ -132,6 +133,18 @@ def validate_license() -> None:
             fail(f"LICENSE is missing notice: {notice}")
 
 
+def validate_github_workflow() -> None:
+    text = read_text(GITHUB_WORKFLOW_PATH)
+    required_snippets = [
+        "actions/checkout@v4",
+        "actions/setup-python@v5",
+        "python scripts/validate_repo.py",
+    ]
+    for snippet in required_snippets:
+        if snippet not in text:
+            fail(f".github/workflows/validate.yml must include {snippet}")
+
+
 def validate_forward_cases() -> None:
     result = subprocess.run(
         [sys.executable, str(FORWARD_CASES_VALIDATOR)],
@@ -158,9 +171,10 @@ def main() -> None:
     validate_patterns()
     validate_openai_yaml()
     validate_license()
+    validate_github_workflow()
     validate_forward_cases()
 
-    print("Repo validation valid: SKILL/README/agent metadata/corpus are consistent")
+    print("Repo validation valid: SKILL/README/agent metadata/corpus/CI are consistent")
 
 
 if __name__ == "__main__":
