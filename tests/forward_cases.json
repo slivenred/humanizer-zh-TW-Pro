@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "purpose": "Forward-test cases for humanizer-zh-tw-pro. These cases are not golden outputs; they define preservation and failure checks for iterative skill reviews.",
+  "cases": [
+    {
+      "id": "seo_price_limit_01",
+      "category": "seo_fact_retention",
+      "request": "請用 humanizer-zh-tw-pro 改寫成台灣繁中，只輸出可發布正文。",
+      "input": "這款圖片壓縮工具在 2026 年 6 月推出 Pro 方案，每月 US$9，支援 WordPress 外掛，但目前不支援 AVIF。它是一站式、革命性的影像優化解決方案，能全方位賦能你的內容生態。",
+      "must_preserve": ["2026 年 6 月", "Pro", "每月 US$9", "WordPress 外掛", "不支援 AVIF"],
+      "must_avoid": ["新增未提供的折扣", "新增未提供的壓縮率", "把不支援 AVIF 改成支援 AVIF", "保留全方位賦能"],
+      "success_checks": ["removes marketing hype", "keeps price/date/feature limits", "does not add review notes to body"]
+    },
+    {
+      "id": "seo_vague_authority_02",
+      "category": "source_safety",
+      "request": "請審閱並改寫這段 SEO 內容，可以附簡短說明。",
+      "input": "研究顯示，這個工具是目前市場第一的 AI humanizer 中文方案，能保證 Google 排名提升。值得注意的是，它已受到多位專家推薦。",
+      "must_preserve": ["AI humanizer 中文"],
+      "must_avoid": ["把研究顯示當成確定事實", "保證 Google 排名提升", "新增專家姓名", "新增排名來源"],
+      "success_checks": ["flags or softens unsupported claims", "does not invent citations", "keeps target keyword if it is the SEO phrase"]
+    },
+    {
+      "id": "author_voice_blog_03",
+      "category": "voice_matching",
+      "request": "請保留作者的吐槽語氣，不要改成正式文件。",
+      "input": "老實說？這功能不是不好，但現在的流程真的有點卡。每次要先匯出 CSV，再手動丟到另一個工具，做到第三次就會開始懷疑人生。",
+      "must_preserve": ["流程有點卡", "匯出 CSV", "手動丟到另一個工具", "吐槽語氣"],
+      "must_avoid": ["改成中性客服公告", "刪掉懷疑人生的語氣", "新增不存在的自動同步功能"],
+      "success_checks": ["reduces formulaic opening if needed", "keeps personality", "keeps concrete workflow details"]
+    },
+    {
+      "id": "already_natural_04",
+      "category": "false_positive",
+      "request": "請判斷是否需要 humanize，必要時小修即可。",
+      "input": "這版先修登入後偶爾跳回首頁的問題。其他頁面沒有動，因為我想先確認這個 bug 是否真的消失。",
+      "must_preserve": ["登入後偶爾跳回首頁", "其他頁面沒有動", "先確認 bug 是否消失"],
+      "must_avoid": ["大幅改寫", "新增不存在的測試結果", "改成宣傳語氣"],
+      "success_checks": ["recognizes already-natural writing", "makes minimal edits", "does not flatten the practical tone"]
+    },
+    {
+      "id": "quote_preservation_05",
+      "category": "structured_content",
+      "request": "請改寫引述外的說明，直接引述不要改。",
+      "input": "執行長在會議中說：「這次改版會賦能內容團隊，讓大家打造更完整的成長飛輪。」這段話凸顯公司對未來布局的重視。",
+      "must_preserve": ["「這次改版會賦能內容團隊，讓大家打造更完整的成長飛輪。」"],
+      "must_avoid": ["改寫直接引述", "新增會議日期", "新增公司名稱"],
+      "success_checks": ["keeps quote intact", "cleans surrounding explanation", "does not add facts"]
+    },
+    {
+      "id": "transcript_06",
+      "category": "structured_content",
+      "request": "請整理逐字稿，但不要改講者原話的意思。",
+      "input": "主持人：所以你覺得這次更新最有感的是哪裡？\n來賓：嗯，說真的，就是少按很多次。以前要切三個頁面，現在一個地方看完，這比較像人用的。",
+      "must_preserve": ["主持人", "來賓", "少按很多次", "以前要切三個頁面", "現在一個地方看完"],
+      "must_avoid": ["改成正式新聞稿", "新增功能名稱", "刪掉口語節奏"],
+      "success_checks": ["keeps speaker roles", "keeps transcript meaning", "lightly cleans only if useful"]
+    },
+    {
+      "id": "technical_command_07",
+      "category": "technical_content",
+      "request": "請把說明文字改自然，命令和錯誤訊息原樣保留。",
+      "input": "如果 build 失敗，請先執行 `npm run build`。如果看到 `Module not found: Can't resolve './config'`，這通常代表設定檔沒有被複製到部署環境。此問題彰顯了建置流程的重要性。",
+      "must_preserve": ["`npm run build`", "`Module not found: Can't resolve './config'`", "設定檔", "部署環境"],
+      "must_avoid": ["改命令", "改錯誤訊息", "新增不存在的修復指令", "保留彰顯"],
+      "success_checks": ["keeps code literals exact", "cleans explanation", "does not invent troubleshooting steps"]
+    },
+    {
+      "id": "ui_labels_08",
+      "category": "structured_content",
+      "request": "請改寫這段產品說明，但 UI 標籤不要改。",
+      "input": "使用者可以按下「Start Export」進入匯出流程，接著點「Advanced Settings」調整圖片品質。這是一個無縫且直覺的端到端體驗。",
+      "must_preserve": ["「Start Export」", "「Advanced Settings」", "圖片品質"],
+      "must_avoid": ["翻譯 UI 標籤", "新增沒有提供的選項", "保留無縫且直覺的端到端體驗"],
+      "success_checks": ["keeps UI labels", "removes hype", "keeps product behavior"]
+    },
+    {
+      "id": "legal_contract_09",
+      "category": "structured_content",
+      "request": "請只改前後說明，合約條文不要改。",
+      "input": "以下條文說明服務中止的條件：\n「甲方得於三十日前以書面通知乙方終止本合約。」\n這個條款展現雙方在合作流程上的彈性與成熟。",
+      "must_preserve": ["「甲方得於三十日前以書面通知乙方終止本合約。」"],
+      "must_avoid": ["改合約文字", "新增法律解釋", "新增管轄法院", "保留展現彈性與成熟"],
+      "success_checks": ["keeps legal quote exact", "cleans surrounding prose", "does not create legal advice"]
+    },
+    {
+      "id": "seo_keyword_10",
+      "category": "seo_fact_retention",
+      "request": "請改寫這段，但保留目標關鍵字「AI humanizer 中文」。",
+      "input": "如果你正在尋找 AI humanizer 中文 工具，本文將深入探討如何選擇一個強大、直覺且全方位的解決方案，幫助你在內容優化路上邁向成功。",
+      "must_preserve": ["AI humanizer 中文"],
+      "must_avoid": ["刪除目標關鍵字", "新增品牌推薦", "保留邁向成功", "保留全方位"],
+      "success_checks": ["keeps keyword exact", "removes roadmapping opener", "does not stuff keyword repeatedly"]
+    },
+    {
+      "id": "uncertainty_11",
+      "category": "source_safety",
+      "request": "請改得自然，但不要把不確定改成確定。",
+      "input": "這個改動可能會改善頁面速度，但效果會依圖片大小、快取設定和主機環境不同而有差異。值得注意的是，這是提升 SEO 的關鍵一步。",
+      "must_preserve": ["可能會改善", "圖片大小", "快取設定", "主機環境", "有差異"],
+      "must_avoid": ["改成一定會改善", "保證提升 SEO", "刪掉限制條件"],
+      "success_checks": ["keeps uncertainty", "removes generic SEO claim", "keeps concrete caveats"]
+    },
+    {
+      "id": "release_note_12",
+      "category": "genre_awareness",
+      "request": "請 humanize，但這是 release note，可以保留變更紀錄語氣。",
+      "input": "新增批次匯入。修正 CSV 欄位為空時匯出失敗的問題。移除舊版圖片壓縮入口。",
+      "must_preserve": ["新增批次匯入", "CSV 欄位為空", "匯出失敗", "移除舊版圖片壓縮入口"],
+      "must_avoid": ["改成行銷文案", "新增未提供的版本號", "刪掉 release note 結構"],
+      "success_checks": ["respects release-note genre", "does not over-humanize", "keeps change facts"]
+    },
+    {
+      "id": "social_post_13",
+      "category": "genre_awareness",
+      "request": "請改得像台灣社群貼文，保留輕鬆語氣。",
+      "input": "🚀 今天我們很高興宣布一個革命性的新功能，它不只是工具，更是內容工作者邁向未來的關鍵引擎！",
+      "must_preserve": ["今天", "新功能", "內容工作者"],
+      "must_avoid": ["革命性", "不只是工具，更是", "關鍵引擎", "新增功能細節"],
+      "success_checks": ["reduces AI hype", "keeps social tone", "does not invent feature details"]
+    },
+    {
+      "id": "brand_voice_sample_14",
+      "category": "voice_matching",
+      "request": "請依照樣本改寫，保留簡短直接的品牌語氣。\n樣本：我們不把功能講得很神。能省時間就說省時間，不能解決的也會講清楚。",
+      "input": "本平台透過先進技術賦能團隊，打造高效率、可擴展且一站式的內容工作流程。",
+      "must_preserve": ["團隊", "內容工作流程"],
+      "must_avoid": ["賦能", "先進技術", "一站式", "新增不存在的功能"],
+      "success_checks": ["matches short direct sample voice", "keeps limits if any", "does not add jokes"]
+    },
+    {
+      "id": "comparison_table_15",
+      "category": "seo_fact_retention",
+      "request": "請改寫表格前言，不要改表格數字。",
+      "input": "以下比較彰顯三個方案在價格與功能方面的核心差異。\n| 方案 | 月費 | 圖片數 |\n| Basic | US$0 | 100 |\n| Pro | US$9 | 2000 |\n| Team | US$29 | 10000 |",
+      "must_preserve": ["Basic", "US$0", "100", "Pro", "US$9", "2000", "Team", "US$29", "10000"],
+      "must_avoid": ["改表格數字", "新增年度價格", "保留彰顯核心差異"],
+      "success_checks": ["cleans intro only", "keeps table values exact", "does not invent plan details"]
+    },
+    {
+      "id": "traditional_taiwan_terms_16",
+      "category": "taiwanese_tone",
+      "request": "請改成自然台灣繁中。",
+      "input": "此解決方案可幫助用戶在多場景中落地內容打法，並沉澱可復用的方法論，形成閉環。",
+      "must_preserve": ["內容", "方法"],
+      "must_avoid": ["用戶", "場景", "落地", "打法", "沉澱", "閉環"],
+      "success_checks": ["uses Taiwan-friendly terms", "removes mainland business jargon", "does not add product facts"]
+    },
+    {
+      "id": "title_case_17",
+      "category": "style_cleanup",
+      "request": "請修中文頁面中的英文標題格式。",
+      "input": "## Complete Guide To Image Compression\n這是一個關於圖片壓縮完整旅程的深入探討。",
+      "must_preserve": ["Image Compression", "圖片壓縮"],
+      "must_avoid": ["Complete Guide To", "完整旅程", "深入探討"],
+      "success_checks": ["fixes title case appropriately", "cleans Chinese intro", "does not translate title unless asked"]
+    },
+    {
+      "id": "chat_residue_18",
+      "category": "chat_residue",
+      "request": "請只輸出正文。",
+      "input": "當然可以，以下是你需要的文章：\n\n值得注意的是，選擇網域註冊商時，不只是看價格，更是要建立長期的品牌基礎。",
+      "must_preserve": ["選擇網域註冊商", "價格", "品牌"],
+      "must_avoid": ["當然可以", "以下是", "值得注意的是", "不只是", "更是", "說明條列"],
+      "success_checks": ["removes assistant residue", "outputs body only", "does not add explanation"]
+    },
+    {
+      "id": "unknown_company_19",
+      "category": "source_safety",
+      "request": "請改寫，但不要猜公司資料。",
+      "input": "雖然公開資料有限，BlueRiver AI 似乎成立於 2010 年代初期，並快速成為亞洲市場的重要玩家。",
+      "must_preserve": ["BlueRiver AI", "公開資料有限"],
+      "must_avoid": ["成立於 2010 年代初期", "亞洲市場的重要玩家", "新增創辦人", "新增融資資訊"],
+      "success_checks": ["does not preserve speculation as fact", "does not invent company history", "keeps uncertainty if discussed"]
+    },
+    {
+      "id": "metadata_frontmatter_20",
+      "category": "structured_content",
+      "request": "請改文章摘要，frontmatter 欄位名稱不要改。",
+      "input": "---\ntitle: AI Humanizer Review\nslug: ai-humanizer-review\n---\n這是一篇深入探討 AI humanizer 的完整指南，幫助讀者掌握核心趨勢。",
+      "must_preserve": ["title:", "AI Humanizer Review", "slug:", "ai-humanizer-review"],
+      "must_avoid": ["改 frontmatter 欄位", "改 slug", "深入探討", "完整指南", "核心趨勢"],
+      "success_checks": ["keeps metadata exact", "cleans body copy", "does not change slug/title unless requested"]
+    },
+    {
+      "id": "mixed_language_terms_21",
+      "category": "technical_content",
+      "request": "請改得自然，但必要技術名詞保留英文。",
+      "input": "這個 workflow 可以透過 webhook 觸發，並在 build 完成後自動 invalidate CDN cache，提供一個強大的端到端鏈路。",
+      "must_preserve": ["workflow", "webhook", "build", "invalidate CDN cache"],
+      "must_avoid": ["端到端鏈路", "強大的", "新增雲端服務商名稱"],
+      "success_checks": ["keeps necessary English technical terms", "removes buzzwords", "does not over-translate"]
+    },
+    {
+      "id": "personal_essay_22",
+      "category": "voice_matching",
+      "request": "請只去掉 AI 腔，不要把個人文章改成知識文。",
+      "input": "我其實沒有很想把這件事說成什麼人生里程碑。只是那天下雨，我在便利商店門口站了十分鐘，突然覺得自己不能再用忙當理由。",
+      "must_preserve": ["沒有很想", "人生里程碑", "下雨", "便利商店門口", "十分鐘", "不能再用忙當理由"],
+      "must_avoid": ["改成教學文", "新增人生建議", "刪掉具體場景"],
+      "success_checks": ["keeps personal texture", "does not over-polish", "keeps concrete details"]
+    },
+    {
+      "id": "faq_answer_23",
+      "category": "genre_awareness",
+      "request": "請改 FAQ 答案，保留問答格式。",
+      "input": "Q: 這個工具支援繁體中文嗎？\nA: 值得注意的是，本工具具備多語言能力，可全方位支援繁體中文內容優化需求。",
+      "must_preserve": ["Q:", "A:", "支援繁體中文"],
+      "must_avoid": ["值得注意的是", "具備多語言能力", "全方位", "新增支援語言清單"],
+      "success_checks": ["keeps FAQ format", "answers directly", "does not invent language support"]
+    },
+    {
+      "id": "image_alt_text_24",
+      "category": "seo_fact_retention",
+      "request": "請改得自然，alt text 不要加入圖片沒有的東西。",
+      "input": "Alt text: 一個充滿活力且革命性的 AI 工具儀表板，展現品牌邁向未來的核心願景。實際圖片只有一張桌面截圖，畫面中有搜尋框和三個報表卡片。",
+      "must_preserve": ["桌面截圖", "搜尋框", "三個報表卡片"],
+      "must_avoid": ["充滿活力", "革命性", "品牌邁向未來", "新增圖片沒有的元素"],
+      "success_checks": ["describes visible image content only", "removes hype", "does not invent visual details"]
+    }
+  ]
+}
