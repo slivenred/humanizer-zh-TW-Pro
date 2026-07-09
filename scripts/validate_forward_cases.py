@@ -21,6 +21,8 @@ CASE_REQUIRED_KEYS = {
 }
 CASE_ALLOWED_KEYS = CASE_REQUIRED_KEYS | {"notes"}
 ID_RE = re.compile(r"^[a-z0-9]+(?:_[a-z0-9]+)*_[0-9]{2}$")
+EXPECTED_CASES = 34
+MIN_LONG_FORM_CHARS = 600
 ALLOWED_CATEGORIES = {
     "chat_residue",
     "false_positive",
@@ -72,8 +74,8 @@ def main() -> None:
     require_string(data.get("purpose"), "purpose")
 
     cases = data.get("cases")
-    if not isinstance(cases, list) or len(cases) < 20:
-        fail("cases must contain at least 20 cases")
+    if not isinstance(cases, list) or len(cases) != EXPECTED_CASES:
+        fail(f"cases must contain exactly {EXPECTED_CASES} cases; update docs and validator together")
 
     seen_ids: set[str] = set()
     seen_categories: set[str] = set()
@@ -114,7 +116,13 @@ def main() -> None:
     if missing_categories:
         fail(f"missing categories: {sorted(missing_categories)}")
 
-    print(f"Forward cases valid: {len(cases)} cases across {len(seen_categories)} categories")
+    if not any(len(case["input"]) >= MIN_LONG_FORM_CHARS for case in cases):
+        fail(f"at least one case input must contain {MIN_LONG_FORM_CHARS} characters")
+
+    print(
+        f"Forward cases valid: {len(cases)} cases across "
+        f"{len(seen_categories)} categories with long-form coverage"
+    )
 
 
 if __name__ == "__main__":

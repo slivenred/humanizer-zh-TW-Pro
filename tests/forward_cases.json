@@ -17,8 +17,8 @@
       "request": "請審閱並改寫這段 SEO 內容，可以附簡短說明。",
       "input": "研究顯示，這個工具是目前市場第一的 AI humanizer 中文方案，能保證 Google 排名提升。值得注意的是，它已受到多位專家推薦。",
       "must_preserve": ["AI humanizer 中文"],
-      "must_avoid": ["把研究顯示當成確定事實", "保證 Google 排名提升", "新增專家姓名", "新增排名來源"],
-      "success_checks": ["flags or softens unsupported claims", "does not invent citations", "keeps target keyword if it is the SEO phrase"]
+      "must_avoid": ["把研究顯示當成確定事實", "用據稱或可能保留市場第一", "保證 Google 排名提升", "保留未具名的專家推薦", "新增專家姓名", "新增排名來源"],
+      "success_checks": ["removes unsupported promotional endorsements from body", "does not invent citations", "keeps target keyword if it is the SEO phrase"]
     },
     {
       "id": "author_voice_blog_03",
@@ -43,9 +43,9 @@
       "category": "structured_content",
       "request": "請改寫引述外的說明，直接引述不要改。",
       "input": "執行長在會議中說：「這次改版會賦能內容團隊，讓大家打造更完整的成長飛輪。」這段話凸顯公司對未來布局的重視。",
-      "must_preserve": ["「這次改版會賦能內容團隊，讓大家打造更完整的成長飛輪。」"],
-      "must_avoid": ["改寫直接引述", "新增會議日期", "新增公司名稱"],
-      "success_checks": ["keeps quote intact", "cleans surrounding explanation", "does not add facts"]
+      "must_preserve": ["執行長 → 在會議中 → 說的歸因關係", "「這次改版會賦能內容團隊，讓大家打造更完整的成長飛輪。」"],
+      "must_avoid": ["改寫直接引述", "更換說話者或場合", "把引述改成客觀事實", "新增會議日期", "新增公司名稱"],
+      "success_checks": ["keeps quote and attribution intact", "cleans surrounding explanation", "does not add facts"]
     },
     {
       "id": "transcript_06",
@@ -113,7 +113,7 @@
     {
       "id": "social_post_13",
       "category": "genre_awareness",
-      "request": "請改得像台灣社群貼文，保留輕鬆語氣。",
+      "request": "這篇會在發布當天貼出。請改得像台灣社群貼文，保留「今天」和輕鬆語氣。",
       "input": "🚀 今天我們很高興宣布一個革命性的新功能，它不只是工具，更是內容工作者邁向未來的關鍵引擎！",
       "must_preserve": ["今天", "新功能", "內容工作者"],
       "must_avoid": ["革命性", "不只是工具，更是", "關鍵引擎", "新增功能細節"],
@@ -122,18 +122,18 @@
     {
       "id": "brand_voice_sample_14",
       "category": "voice_matching",
-      "request": "請依照樣本改寫，保留簡短直接的品牌語氣。\n樣本：我們不把功能講得很神。能省時間就說省時間，不能解決的也會講清楚。",
+      "request": "請依照樣本改寫，保留簡短直接的品牌語氣。\n樣本：我實測 30 天，轉換率增加 18%。但我們不把功能講得很神。能省時間就說省時間，不能解決的也會講清楚。",
       "input": "本平台透過先進技術賦能團隊，打造高效率、可擴展且一站式的內容工作流程。",
       "must_preserve": ["團隊", "內容工作流程"],
-      "must_avoid": ["賦能", "先進技術", "一站式", "新增不存在的功能"],
-      "success_checks": ["matches short direct sample voice", "keeps limits if any", "does not add jokes"]
+      "must_avoid": ["賦能", "先進技術", "一站式", "新增不存在的功能", "搬入樣本的 30 天或 18%", "捏造第一人稱實測"],
+      "success_checks": ["extracts style without copying sample facts", "matches short direct sample voice", "does not add a persona or unsupported result"]
     },
     {
       "id": "comparison_table_15",
       "category": "seo_fact_retention",
       "request": "請改寫表格前言，不要改表格數字。",
       "input": "以下比較彰顯三個方案在價格與功能方面的核心差異。\n| 方案 | 月費 | 圖片數 |\n| Basic | US$0 | 100 |\n| Pro | US$9 | 2000 |\n| Team | US$29 | 10000 |",
-      "must_preserve": ["Basic", "US$0", "100", "Pro", "US$9", "2000", "Team", "US$29", "10000"],
+      "must_preserve": ["Basic 對應 US$0 與 100", "Pro 對應 US$9 與 2000", "Team 對應 US$29 與 10000"],
       "must_avoid": ["改表格數字", "新增年度價格", "保留彰顯核心差異"],
       "success_checks": ["cleans intro only", "keeps table values exact", "does not invent plan details"]
     },
@@ -151,7 +151,7 @@
       "category": "style_cleanup",
       "request": "請修中文頁面中的英文標題格式。",
       "input": "## Complete Guide To Image Compression\n這是一個關於圖片壓縮完整旅程的深入探討。",
-      "must_preserve": ["Image Compression", "圖片壓縮"],
+      "must_preserve": ["英文標題的 image compression 主題", "圖片壓縮"],
       "must_avoid": ["Complete Guide To", "完整旅程", "深入探討"],
       "success_checks": ["fixes title case appropriately", "cleans Chinese intro", "does not translate title unless asked"]
     },
@@ -159,17 +159,17 @@
       "id": "chat_residue_18",
       "category": "chat_residue",
       "request": "請只輸出正文。",
-      "input": "當然可以，以下是你需要的文章：\n\n值得注意的是，選擇網域註冊商時，不只是看價格，更是要建立長期的品牌基礎。",
+      "input": "當然可以，以下是你需要的文章：\n\n值得注意的是，選擇網域註冊商時，不只是看價格，更是要建立長期的品牌基礎。\n\n如果你想，我也可以再整理三家推薦。",
       "must_preserve": ["選擇網域註冊商", "價格", "品牌"],
-      "must_avoid": ["當然可以", "以下是", "值得注意的是", "不只是", "更是", "說明條列"],
+      "must_avoid": ["當然可以", "以下是", "值得注意的是", "不只是", "更是", "如果你想", "再整理三家推薦", "說明條列"],
       "success_checks": ["removes assistant residue", "outputs body only", "does not add explanation"]
     },
     {
       "id": "unknown_company_19",
       "category": "source_safety",
       "request": "請改寫，但不要猜公司資料。",
-      "input": "雖然公開資料有限，BlueRiver AI 似乎成立於 2010 年代初期，並快速成為亞洲市場的重要玩家。",
-      "must_preserve": ["BlueRiver AI", "公開資料有限"],
+      "input": "提供的公司官網與商業登記資料都沒有成立年份。BlueRiver AI 似乎成立於 2010 年代初期，並快速成為亞洲市場的重要玩家。",
+      "must_preserve": ["BlueRiver AI", "提供的公司官網與商業登記資料都沒有成立年份"],
       "must_avoid": ["成立於 2010 年代初期", "亞洲市場的重要玩家", "新增創辦人", "新增融資資訊"],
       "success_checks": ["does not preserve speculation as fact", "does not invent company history", "keeps uncertainty if discussed"]
     },
@@ -178,7 +178,7 @@
       "category": "structured_content",
       "request": "請改文章摘要，frontmatter 欄位名稱不要改。",
       "input": "---\ntitle: AI Humanizer Review\nslug: ai-humanizer-review\n---\n這是一篇深入探討 AI humanizer 的完整指南，幫助讀者掌握核心趨勢。",
-      "must_preserve": ["title:", "AI Humanizer Review", "slug:", "ai-humanizer-review"],
+      "must_preserve": ["完整保留 `---\ntitle: AI Humanizer Review\nslug: ai-humanizer-review\n---` 區塊"],
       "must_avoid": ["改 frontmatter 欄位", "改 slug", "深入探討", "完整指南", "核心趨勢"],
       "success_checks": ["keeps metadata exact", "cleans body copy", "does not change slug/title unless requested"]
     },
@@ -217,6 +217,96 @@
       "must_preserve": ["桌面截圖", "搜尋框", "三個報表卡片"],
       "must_avoid": ["充滿活力", "革命性", "品牌邁向未來", "新增圖片沒有的元素"],
       "success_checks": ["describes visible image content only", "removes hype", "does not invent visual details"]
+    },
+    {
+      "id": "fact_relation_swap_25",
+      "category": "seo_fact_retention",
+      "request": "請改寫比較說明，保留每個方案對應的價格、額度與限制，不要換算幣別。",
+      "input": "Basic 每月 US$0，可處理 100 張圖片；Pro 每月 US$9，可處理 2,000 張；Team 每月 US$29，可處理 10,000 張。只有 Team 支援共享工作區，Basic 和 Pro 都不支援。這三個方案以革命性的定價矩陣全方位滿足不同客群。",
+      "must_preserve": ["Basic → US$0 → 100 張 → 不支援共享工作區", "Pro → US$9 → 2,000 張 → 不支援共享工作區", "Team → US$29 → 10,000 張 → 支援共享工作區"],
+      "must_avoid": ["交換任一方案的價格或額度", "把 Basic 或 Pro 改成支援共享工作區", "把 US$ 換算成新台幣", "新增年繳價格"],
+      "success_checks": ["preserves entity-attribute-value relations", "preserves negation and scope", "removes hype without changing plan facts"]
+    },
+    {
+      "id": "secondhand_text_26",
+      "category": "false_positive",
+      "request": "請只整理引述外的說明；文章標題和反例原文都要保留。",
+      "input": "文章標題是〈「全方位賦能」為什麼讓文案變空？〉。作者把「這不只是工具，更是品牌成長的關鍵引擎」列為反例，接著說這類句子常用氣勢代替資訊。這段說明目前有一點重複。",
+      "must_preserve": ["〈「全方位賦能」為什麼讓文案變空？〉", "「這不只是工具，更是品牌成長的關鍵引擎」"],
+      "must_avoid": ["改寫標題裡的全方位賦能", "改寫反例引述", "把被討論的詞誤判成作者語氣"],
+      "success_checks": ["recognizes secondhand text", "edits only surrounding prose", "keeps title and quotation exact"]
+    },
+    {
+      "id": "hype_not_evidence_27",
+      "category": "source_safety",
+      "request": "請改成自然的台灣繁中，只輸出可發布正文，不要縮成摘要。",
+      "input": "上個月，我花了兩個下午，使用這款圖片壓縮工具整理網站裡 1,200 張舊圖。這段旅程不僅見證了內容流程的重要轉折，更彰顯了自動化在現代網站管理中的關鍵價值。\n\nPro 方案每月 US$9，提供 WordPress 外掛與批次壓縮。我實際處理的圖片平均從 1.8 MB 降到 620 KB，但目前不支援 AVIF。透過無縫、直覺且強大的體驗，它讓我能快速、穩定、高效地完成工作。\n\n因為網站還有 300 多張 AVIF，我最後仍得保留原本的處理流程。對每月要整理大量 JPEG 或 PNG 的人來說，批次功能確實省事；如果主要用 AVIF，就得等它補上支援。儘管仍面臨挑戰，這款工具的未來依然值得期待。",
+      "must_preserve": ["第一人稱與三段內容", "兩個下午", "1,200 張舊圖", "Pro 每月 US$9", "WordPress 外掛與批次壓縮", "1.8 MB 降到 620 KB", "不支援 AVIF", "300 多張 AVIF", "保留原本流程", "JPEG 或 PNG 與 AVIF 的條件差異"],
+      "must_avoid": ["新增操作簡單", "新增批次處理很穩定", "新增集中管理", "新增未量化的省時結果", "新增其他工具", "捏造團隊或客戶經驗"],
+      "success_checks": ["treats hype as deletable rather than evidence", "keeps perspective and detail density", "does not create mild-sounding product claims"]
+    },
+    {
+      "id": "protected_markup_28",
+      "category": "structured_content",
+      "request": "請只改正文句子，所有 frontmatter、連結、placeholder、HTML attribute 和腳註標記原樣保留。",
+      "input": "---\nslug: ai-humanizer-review\ntitle: AI Humanizer Review\n---\n請按 [查看 Pro 方案](https://example.com/pricing?plan=pro&utm_source=guide) 深入探索價格。\n<div data-plan=\"pro\">{{ monthly_price }}</div>\n廠商把這項功能稱為革命性的突破。[^pricing]\n\n[^pricing]: https://example.com/docs/pricing",
+      "must_preserve": ["完整 frontmatter 區塊", "[查看 Pro 方案](https://example.com/pricing?plan=pro&utm_source=guide)", "<div data-plan=\"pro\">{{ monthly_price }}</div>", "[^pricing]", "[^pricing]: https://example.com/docs/pricing"],
+      "must_avoid": ["改 slug 或 title", "改 URL query", "翻譯 data-plan", "替換 placeholder", "改腳註 id", "新增價格"],
+      "success_checks": ["keeps protected spans byte-for-byte", "cleans only prose around markup", "does not infer the placeholder value"]
+    },
+    {
+      "id": "long_form_coherence_29",
+      "category": "genre_awareness",
+      "request": "請 humanize 這篇長文，保留標題層級、第一人稱立場、所有數字、來源歸因、限制和最後的 CTA；不要縮成摘要，只輸出正文。",
+      "input": "## 用了三個月，我還會續訂嗎？\n\n我從 2026 年 4 月 1 日開始使用 PicShrink Pro，原本只是想整理網站累積的舊圖。三個月內，我分四批處理了 3,480 張 JPEG 和 PNG。這不是一段顛覆工作流程的革命旅程，但確實讓我少做了一些重複操作。\n\n## 價格與我實際用到的功能\n\nPro 方案每月 US$9，包含 WordPress 外掛、批次壓縮和每月 5,000 張額度。依據廠商 2026 年 6 月 15 日的更新紀錄，平均可縮小 60%；這是廠商公布的數字，不是我的測試結果。我自己的四批圖片平均從 1.6 MB 降到 710 KB。工具目前不支援 AVIF，也不能讓團隊共用工作區。\n\n設定外掛花了大約 20 分鐘。之後每一批都要先檢查備份，再開始壓縮；其中第二批有 17 張圖片需要重跑。介面不是什麼無縫體驗，但錯誤清單有列出檔名，所以我至少知道哪些圖片沒完成。這是我願意繼續用的主要原因。\n\n## 不適合誰\n\n如果網站主要使用 AVIF，這個方案現在幫不上忙。需要多人共用工作區的團隊也得看別的方案。我的網站以 JPEG 和 PNG 為主，而且每月沒有超過 5,000 張，所以這兩個限制目前可以接受；它們不是對所有人都無關緊要。\n\n## 結論\n\n我會再續訂一個月，但不會年繳。理由很單純：每月 US$9 還在我願意承擔的範圍，批次壓縮也確實處理完這三個月的圖片；AVIF 和團隊功能沒補上之前，我不想先付一整年。完整方案限制請看 [官方價格頁](https://example.com/picshrink/pricing)。",
+      "must_preserve": ["四個 H2 段落的功能與順序", "第一人稱三個月使用立場", "2026 年 4 月 1 日", "四批與 3,480 張 JPEG/PNG", "Pro 每月 US$9 與 5,000 張額度", "廠商 2026 年 6 月 15 日更新紀錄的 60% 宣稱", "廠商數字不是作者測試", "作者實測 1.6 MB 降到 710 KB", "AVIF 與團隊工作區限制", "20 分鐘、17 張重跑與錯誤清單", "只續訂一個月、不年繳的立場", "官方價格頁 URL"],
+      "must_avoid": ["縮成條列摘要", "刪除任一段落功能", "把廠商 60% 說成作者實測", "新增速度或 SEO 效果", "把負面經驗洗成中性", "改 URL", "新增年繳折扣"],
+      "success_checks": ["preserves long-form coverage and paragraph roles", "keeps attribution and causal reasoning", "improves transitions without flattening stance", "ends with the original decision and CTA"]
+    },
+    {
+      "id": "isolated_marker_false_positive_30",
+      "category": "false_positive",
+      "request": "這段本來就是作者稿。請判斷是否真的需要改；單一破折號、一次『此外』和必要的三項清單不要為了避嫌硬拆。",
+      "input": "我最後留下三個檢查項目：價格、續約條件、資料匯出。不是因為三個比較好看，而是少一項都會影響搬家。這份表格很陽春——但我每次換服務前都會打開。 此外，客服回覆時間我只記實際遇到的，不拿官方承諾來湊數。",
+      "must_preserve": ["價格、續約條件、資料匯出三項", "單一破折號", "一次『此外』", "陽春但實用的作者判斷", "只記實際客服回覆時間"],
+      "must_avoid": ["為了避開三段式刪掉一項", "一律刪除破折號", "一律刪除此外", "大幅重寫已自然的段落", "改成正式報告"],
+      "success_checks": ["applies cluster-based detection", "makes no or minimal edits", "preserves deliberate structure and voice"]
+    },
+    {
+      "id": "named_source_attribution_31",
+      "category": "source_safety",
+      "request": "請改寫成自然繁中，保留具名來源、連結、誰說了什麼，以及 Beta 和地區限制。",
+      "input": "根據 [Acme 2026 年 7 月更新紀錄](https://example.com/changelog/2026-07)，Acme 表示新的批次匯入功能可把等待時間縮短 30%。這是廠商公布的測試結果，而且功能仍是 Beta，目前不提供給歐盟帳號。業界普遍認為這項突破將重塑內容生態。",
+      "must_preserve": ["Acme 2026 年 7 月更新紀錄與 URL", "30% 是 Acme 表示的結果", "Beta", "不提供給歐盟帳號"],
+      "must_avoid": ["把 30% 升格為客觀事實", "刪除廠商歸因", "刪除 Beta 或歐盟限制", "保留業界普遍認為", "新增第三方驗證"],
+      "success_checks": ["keeps named attribution", "preserves source link and limitations", "removes unsupported consensus claim"]
+    },
+    {
+      "id": "internal_contradiction_32",
+      "category": "source_safety",
+      "request": "請審閱這段，可以附簡短說明。不要替我判斷哪個價格才對，也不要把兩個數字調成一致。",
+      "input": "正文寫道：Pro 方案每月 US$9，可處理 2,000 張圖片。\n\nFAQ 寫道：Pro 方案每月 US$12，可處理 2,000 張圖片。\n\n這套革命性的定價策略能為所有人創造最大價值。",
+      "must_preserve": ["正文的 Pro → US$9 → 2,000 張", "FAQ 的 Pro → US$12 → 2,000 張", "兩個來源位置不同"],
+      "must_avoid": ["擅自選 US$9", "擅自選 US$12", "平均或換算價格", "假裝矛盾不存在", "新增正確價格來源"],
+      "success_checks": ["does not silently resolve contradiction", "separates publishable copy from review note", "flags the exact conflict without inventing an answer"]
+    },
+    {
+      "id": "opinion_stance_33",
+      "category": "voice_matching",
+      "request": "請去掉 AI 腔，但保留作者明確的負面評價和理由，不要改成中立產品說明。",
+      "input": "這次改版號稱是一次關鍵躍進，但我不喜歡。匯出按鈕從右上角移到選單裡，我連續三天都按錯位置；批次操作還多了一個確認視窗。這些不是大 bug，卻讓我每天都多停一下。我寧可用舊版。",
+      "must_preserve": ["作者不喜歡改版", "匯出按鈕從右上角移到選單", "連續三天按錯", "批次操作多一個確認視窗", "不是大 bug 但每天造成停頓", "寧可用舊版"],
+      "must_avoid": ["改成各有優缺點", "替產品找理由", "刪除負面立場", "新增其他使用者意見", "新增效率數據"],
+      "success_checks": ["preserves defensible opinion", "keeps concrete reasons", "removes only the inflated framing"]
+    },
+    {
+      "id": "unknown_actor_34",
+      "category": "technical_content",
+      "request": "請把技術說明改自然，但文件沒有寫執行者時不要自行補『系統』『客服』或『你』。",
+      "input": "部署完成後會保留記錄 7 天。若匯入失敗，會在 10 分鐘內寄出通知。現有文件沒有說明由哪個服務保留記錄或寄信。此機制彰顯了平台對可靠性的高度重視。",
+      "must_preserve": ["部署完成後", "記錄保留 7 天", "匯入失敗", "10 分鐘內寄出通知", "文件未說明執行者"],
+      "must_avoid": ["新增系統會保留", "新增客服會寄信", "新增你會收到信", "猜測服務名稱", "保留彰顯可靠性"],
+      "success_checks": ["does not invent an actor", "keeps timing and conditions", "uses natural subject omission where appropriate"]
     }
   ]
 }

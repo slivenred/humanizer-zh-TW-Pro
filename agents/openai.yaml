@@ -2,7 +2,7 @@ interface:
   display_name: "Humanizer zh-TW Pro"
   short_description: "台灣繁中 AI 寫作痕跡清理、事實保留與作者語氣校準"
   brand_color: "#0F766E"
-  default_prompt: "請用 $humanizer-zh-tw-pro 去除這段繁中內容的 AI 味，並保留事實、來源、價格、限制條件和作者聲音。"
+  default_prompt: "請用 $humanizer-zh-tw-pro 去除這段繁中內容的 AI 味，保留原文視角、細節、事實關係和作者聲音，不要新增看似合理但未經原文支持的主張。"
 
 policy:
   allow_implicit_invocation: true
