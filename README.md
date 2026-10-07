@@ -2,8 +2,9 @@
 
 [![Validate](https://github.com/slivenred/humanizer-zh-TW-Pro/actions/workflows/validate.yml/badge.svg)](https://github.com/slivenred/humanizer-zh-TW-Pro/actions/workflows/validate.yml)
 
-台灣繁中版 AI 寫作痕跡清理 skill。  
-它不是 deterministic 改寫程式，而是一份給 Claude Code、Codex、OpenCode 等 agent 使用的編輯規則。效果取決於執行它的模型、原文品質，以及你給的保留條件。
+台灣繁中去 AI slop 編輯 skill，讓文字有內容、說得清楚，也保留作者自己的聲音。可用於改寫、輕修或只審稿；已經自然的文字可以不改。
+
+這是一份給 Claude Code、Codex、OpenCode 等 agent 使用的編輯規則，不是 deterministic 改寫程式。效果取決於模型、原文與保留條件；不提供 AI 生成機率或偵測器通過保證。
 
 ## 這版和一般繁中版差在哪
 
@@ -15,7 +16,10 @@
 - 禁止用假人味填空，也不能把宣傳詞偷換成「操作簡單、穩定、省時」等未經原文支持的主張。
 - 保留原文視角、段落功能與資訊密度；除非使用者要求，不把 humanize 做成摘要。
 - 保留引述、URL、frontmatter、表格、程式碼、placeholder、錯誤訊息和 SEO 關鍵字，避免被改壞。
-- 加入二次審稿流程：先改，再問「哪裡還像 AI？哪裡被洗太平？」再修一次。
+- 區分只審稿、輕修與改寫：先看段落有沒有內容與功能，再修詞句；複查只修實際問題，不強制重寫第二版。
+- 詞表是線索，不能誤刪「閉環控制、鏈路聚合、核心 dump」等術語，也不強制拆掉必要的三項清單。
+
+本輪實讀六個主要 GitHub 競品，採用任務分流、最小修改與雙側回歸檢查。比較來源、取捨及對應修改見 [競品研究](docs/competitor-review.md)。
 
 ## 安裝
 
@@ -50,7 +54,7 @@ mkdir -p ~/.config/opencode/skills
 git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencode/skills/humanizer-zh-tw-pro
 ```
 
-也可以只把 `SKILL.md` 複製到對應 skill 目錄。
+手動複製時，將 `SKILL.md` 和 `references/` 一起放進對應 skill 目錄。一般改稿讀主檔即可，完整範例按需載入；維護用 scripts 和 tests 不需在使用時執行。
 
 ## 使用
 
@@ -60,6 +64,18 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 請用 humanizer-zh-tw-pro 幫我改寫下面這段，保留所有價格、來源與限制條件：
 
 [貼上文字]
+```
+
+只審稿、不改全文：
+
+```text
+請用 humanizer-zh-tw-pro 只審稿。指出有問題的原句、影響與局部建議，先不要改寫全文或檔案。
+```
+
+保留已經自然的稿子：
+
+```text
+請用 humanizer-zh-tw-pro 必要時小修；沒有實質問題就原樣保留，只給正文。
 ```
 
 帶作者聲音樣本：
@@ -77,7 +93,7 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 用於 SEO 頁面：
 
 ```text
-請用 humanizer-zh-tw-pro 審閱這篇 SEO 頁面。
+請用 humanizer-zh-tw-pro 審閱並改寫這篇 SEO 頁面。
 不要新增未驗證事實，不要刪掉價格、日期、來源、比較條件或但書。
 只輸出可直接發布的正文。
 ```
@@ -110,7 +126,7 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 
 **使用後：**
 
-> 這功能不是不好，但現在的流程真的有點卡。每次都要先匯出 CSV，再手動丟到另一個工具；做到第三次，我就開始懷疑人生。
+> 這功能不是不好，但現在的流程真的有點卡。每次都要先匯出 CSV，再手動丟到另一個工具；做到第三次就開始懷疑人生。
 
 **效果觀察：**
 
@@ -136,17 +152,26 @@ git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencod
 
 ## Forward-test corpus
 
-這個 repo 另外包含 34 組、10 類維護用 forward-test cases，其中包含一組 600 字以上的長文案例。它們用來避免後續版本越改越重、把事實關係和作者聲音改壞，或把 humanize 做成摘要。這不是標準答案集，而是列出每個樣本必須保留、必須避免和人工審閱時要看的行為。
+這個 repo 包含 42 組、10 類維護用 forward-test cases，其中有一組 600 字以上的長文。案例同時包含需要清理的稿子與應保留的文字，用來檢查事實關係、作者聲音、任務範圍，以及是否把 humanize 做成摘要。它們不是逐字標準答案。
 
 檢查 repo 與 corpus 一致性：
 
 ```bash
 python3 scripts/validate_repo.py
+python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
 如果本機沒有 PyYAML，先執行 `python3 -m pip install PyYAML`。GitHub Actions 也會在 push 和 pull request 時跑同一個檢查。
 
-這個總檢查會驗證官方 skill frontmatter 契約、33 組 pattern 的核心內容、`SKILL.md` / `README.md` / `CHANGELOG.md` / `agents/openai.yaml` / `LICENSE` / forward-test corpus 的一致性，以及 GitHub Actions 的結構。人工 forward-test 時，從 `tests/forward_cases.json` 挑選案例，使用該案例的 `request` 和 `input` 跑一次 skill，再用 `must_preserve`、`must_avoid`、`success_checks` 做審閱。只有在案例暴露明確失敗時，才修改 `SKILL.md`。
+repo validator 檢查 frontmatter、33 種模式、版本／授權／corpus 一致性、文件連結與 CI 結構；這些是結構檢查，不會呼叫模型或證明改寫品質。
+
+實際 forward-test 要把案例的 `request`、`input` 交給執行 agent，再由另一位編輯或 agent 依 `must_preserve`、`must_avoid`、`success_checks` 審閱。保存完整回應、執行環境與審閱依據後，可重跑離線檢查：
+
+```bash
+python3 scripts/check_forward_outputs.py tests/results/2026-10-08-pro6.json
+```
+
+離線 checker 只核對記錄格式、版本、案例 ID 和明確要求逐字保留的 `protected_literals`。語意、聲音、是否越出任務範圍，都依記錄中的編輯審閱，不能由字串比對證明。退出碼 0 表示本次提交案例審閱通過且 literals 完整；部分案例通過不等於全部 42 組通過。方法與限制見 [驗證指南](docs/evaluation.md)。
 
 ## 33 種模式
 
@@ -209,6 +234,14 @@ python3 scripts/validate_repo.py
 | 33 | 假裝坦白的修辭開場 |
 
 ## 版本紀錄
+
+### 1.0.0-pro.6
+
+- 新增只審稿與不改稿的分支，預設最小修改，複查不再強制第二版。
+- 新增篇章資訊檢查、技術術語例外與來源文字指令隔離，保留提案／計畫狀態。
+- 修正計畫語氣與第一人稱範例；33 種模式與編號維持不變。
+- corpus 擴充至 42 組；新增實際輸出記錄、離線 literal checker、回歸測試與競品取捨文件。
+- 完整改稿範例移至按需載入的 reference；來源基準仍為 v2.8.2，本輪研究另檢視上游 main 的 v3.1.0。
 
 ### 1.0.0-pro.5
 

@@ -148,6 +148,18 @@ def validate_skill_size() -> None:
         fail(f"SKILL.md has {lines} lines; split references before exceeding {MAX_SKILL_LINES}")
 
 
+def validate_local_links() -> None:
+    documents = [SKILL_PATH, README_PATH, *sorted((ROOT / "docs").glob("*.md")),
+                 *sorted((ROOT / "references").glob("*.md"))]
+    for document in documents:
+        for target in re.findall(r"\[[^\]]+\]\(([^\s)]+)\)", read_text(document)):
+            if re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", target) or target.startswith("#"):
+                continue
+            path = target.split("#", 1)[0]
+            if not (document.parent / path).is_file():
+                fail(f"{document.relative_to(ROOT)} has a missing local link: {target}")
+
+
 def validate_upstream_attribution(frontmatter: dict) -> None:
     metadata = frontmatter.get("metadata", {})
     needle = f"blader/humanizer v{EXPECTED_UPSTREAM_VERSION}"
@@ -225,6 +237,8 @@ def validate_github_workflow() -> None:
             fail(f".github/workflows/validate.yml must use {action}")
     if "python scripts/validate_repo.py" not in runs:
         fail(".github/workflows/validate.yml must execute python scripts/validate_repo.py")
+    if "python -m unittest discover -s tests -p 'test_*.py'" not in runs:
+        fail(".github/workflows/validate.yml must execute the recorded-output regression tests")
 
 
 def validate_forward_cases() -> None:
@@ -252,6 +266,7 @@ def main() -> None:
         fail("CHANGELOG.md latest release must match SKILL.md metadata.version")
 
     validate_skill_size()
+    validate_local_links()
     validate_upstream_attribution(frontmatter)
     validate_patterns()
     validate_openai_yaml()

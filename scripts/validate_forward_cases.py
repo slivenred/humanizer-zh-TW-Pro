@@ -19,9 +19,9 @@ CASE_REQUIRED_KEYS = {
     "must_avoid",
     "success_checks",
 }
-CASE_ALLOWED_KEYS = CASE_REQUIRED_KEYS | {"notes"}
+CASE_ALLOWED_KEYS = CASE_REQUIRED_KEYS | {"notes", "protected_literals", "output_mode"}
 ID_RE = re.compile(r"^[a-z0-9]+(?:_[a-z0-9]+)*_[0-9]{2}$")
-EXPECTED_CASES = 34
+EXPECTED_CASES = 42
 MIN_LONG_FORM_CHARS = 600
 ALLOWED_CATEGORIES = {
     "chat_residue",
@@ -111,6 +111,18 @@ def main() -> None:
         require_string_list(case["success_checks"], f"{case_id}.success_checks", min_items=2)
         if "notes" in case:
             require_string(case["notes"], f"{case_id}.notes")
+        if "protected_literals" in case:
+            literals = case["protected_literals"]
+            require_string_list(literals, f"{case_id}.protected_literals", min_items=0)
+            if len(literals) != len(set(literals)):
+                fail(f"{case_id}.protected_literals must not contain duplicates")
+            for literal in literals:
+                if literal not in case["input"]:
+                    fail(f"{case_id}.protected_literals must occur verbatim in input: {literal!r}")
+        if "output_mode" in case:
+            require_string(case["output_mode"], f"{case_id}.output_mode")
+            if case["output_mode"] not in {"rewrite", "audit"}:
+                fail(f"{case_id}.output_mode must be rewrite or audit")
 
     missing_categories = ALLOWED_CATEGORIES - seen_categories
     if missing_categories:

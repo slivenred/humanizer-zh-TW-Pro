@@ -26,3 +26,6 @@ jobs:
 
       - name: Run repo validation
         run: python scripts/validate_repo.py
+
+      - name: Test recorded-output checks
+        run: python -m unittest discover -s tests -p 'test_*.py'
