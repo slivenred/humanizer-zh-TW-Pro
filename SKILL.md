@@ -2,7 +2,7 @@
 name: humanizer-zh-tw-pro
 description: |
   編輯、改寫或審閱繁體中文內容，特別是使用者要求「去 AI 味」、去 AI slop、humanize、改成台灣繁中、保留作者聲音，或清理 SEO 頁面、產品文案、部落格、技術文件的生成式模板腔時使用。依 33 種模式清理空泛、宣傳、翻譯腔與聊天殘留；只審稿時不重寫，自然稿可不改，保留事實、限制、作者聲音與受保護內容。
-license: MIT
+license: MIT AND CC-BY-SA-4.0
 allowed-tools:
   - Read
   - Write
@@ -98,6 +98,8 @@ metadata:
 保留教學的操作順序、FAQ 的問答、比較表的維度、release note 的變更語氣，以及作者有用的立場。提醒、術語重複和必要對照有助理解時就留下，不刻意湊不規則句長或替作者補觀點。
 
 ## 33 種 AI 寫作模式
+
+本模式目錄的 Wikipedia 衍生內容與本地改作依 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 發布；作者、來源與變更說明見 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。其餘原創指令採 MIT。
 
 ### 1. 過度放大意義、歷史定位和大趨勢
 

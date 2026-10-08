@@ -21,10 +21,12 @@ README_PATH = ROOT / "README.md"
 CHANGELOG_PATH = ROOT / "CHANGELOG.md"
 OPENAI_YAML_PATH = ROOT / "agents" / "openai.yaml"
 LICENSE_PATH = ROOT / "LICENSE"
+THIRD_PARTY_NOTICES_PATH = ROOT / "THIRD_PARTY_NOTICES.md"
 GITHUB_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "validate.yml"
 FORWARD_CASES_VALIDATOR = ROOT / "scripts" / "validate_forward_cases.py"
 EXPECTED_PATTERN_COUNT = 33
 EXPECTED_UPSTREAM_VERSION = "2.8.2"
+EXPECTED_SKILL_LICENSE = "MIT AND CC-BY-SA-4.0"
 MAX_SKILL_LINES = 500
 MIN_PATTERN_BODY_CHARS = 100
 ALLOWED_SKILL_FRONTMATTER_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
@@ -128,8 +130,8 @@ def validate_skill_frontmatter(frontmatter: dict) -> str:
         fail("SKILL.md frontmatter description must be non-empty")
     if len(description.strip()) > 1024 or "<" in description or ">" in description:
         fail("SKILL.md description must follow the official length and character limits")
-    if frontmatter.get("license") != "MIT":
-        fail("SKILL.md frontmatter license must be MIT")
+    if frontmatter.get("license") != EXPECTED_SKILL_LICENSE:
+        fail(f"SKILL.md frontmatter license must be {EXPECTED_SKILL_LICENSE}")
     allowed_tools = frontmatter.get("allowed-tools")
     if not isinstance(allowed_tools, list) or not all(isinstance(tool, str) for tool in allowed_tools):
         fail("SKILL.md allowed-tools must be a list of strings")
@@ -149,7 +151,7 @@ def validate_skill_size() -> None:
 
 
 def validate_local_links() -> None:
-    documents = [SKILL_PATH, README_PATH, *sorted((ROOT / "docs").glob("*.md")),
+    documents = [SKILL_PATH, README_PATH, THIRD_PARTY_NOTICES_PATH, *sorted((ROOT / "docs").glob("*.md")),
                  *sorted((ROOT / "references").glob("*.md"))]
     for document in documents:
         for target in re.findall(r"\[[^\]]+\]\(([^\s)]+)\)", read_text(document)):
@@ -217,6 +219,22 @@ def validate_license() -> None:
     for notice in EXPECTED_LICENSE_NOTICES:
         if notice not in text:
             fail(f"LICENSE is missing notice: {notice}")
+    notices = read_text(THIRD_PARTY_NOTICES_PATH)
+    for notice in EXPECTED_LICENSE_NOTICES[:2] + [
+        "Copyright (c) 2025 Hardik Pandya",
+        "Copyright (c) 2026 @LifelongLazyLearner",
+        "Copyright (c) 2026 Kevin Magnan",
+        "Copyright (c) 2026 judetelan",
+    ]:
+        if notice not in notices:
+            fail(f"THIRD_PARTY_NOTICES.md is missing upstream notice: {notice}")
+    for target in (
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+        "https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing",
+        "https://en.wikipedia.org/w/index.php?title=Wikipedia:Signs_of_AI_writing&action=history",
+    ):
+        if target not in notices:
+            fail(f"THIRD_PARTY_NOTICES.md is missing attribution or license link: {target}")
 
 
 def validate_github_workflow() -> None:

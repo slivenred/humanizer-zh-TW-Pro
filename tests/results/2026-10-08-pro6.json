@@ -4,7 +4,7 @@
   "run": {
     "date": "2026-10-08",
     "executor": "Four independent Codex delegated agents; inherited model, exact model ID unavailable",
-    "setup": "Consolidated 16-case record: initial request/input-only batches of 8 cases per agent, shared context within each batch; one case rerun by a third fresh agent after strengthening action preservation; two audit cases rerun by a fourth fresh agent after clarifying output-mode precedence. No expected answers supplied. Reviewer: root agent. Other 13 original outputs retained and re-reviewed as unaffected. Initial failed record preserved separately. Final SKILL.md sha256: f57f4ee48b4efe2f399d790331fa718425014026d205568de73d52d1f72e9392"
+    "setup": "Consolidated 16-case record: initial request/input-only batches of 8 cases per agent, shared context within each batch; one case rerun by a third fresh agent after strengthening action preservation; two audit cases rerun by a fourth fresh agent after clarifying output-mode precedence. No expected answers supplied. Reviewer: root agent. Other 13 original outputs retained and re-reviewed as unaffected. Initial failed record preserved separately. Behavior-tested SKILL.md sha256 (before publication-only licensing notices): f57f4ee48b4efe2f399d790331fa718425014026d205568de73d52d1f72e9392 Subsequent changes only clarified license metadata and source/provenance notices; behavior instructions were unchanged and these recorded outputs were not rerun for the notice-only change."
   },
   "outputs": [
     {

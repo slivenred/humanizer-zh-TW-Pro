@@ -44,4 +44,6 @@ python3 scripts/check_forward_outputs.py tests/results/2026-10-08-pro6.json
 
 2026-10-08 初輪由兩個獨立 delegated agents 執行 16 組案例，每組 agent 內的案例共享上下文。root agent 審閱後有 1 組失敗，保存於 [初輪記錄](../tests/results/2026-10-08-pro6-initial.json)；補強動作保留規則後，由第三個獨立 agent 重跑該案例。最後澄清輸出偏好不改變任務模式，由第四個獨立 agent 重跑兩組審稿案例。最終記錄包含三組重跑與其餘 13 組未受影響的原始輸出。執行者未取得預期答案或審閱規則，root agent 另行核對完整輸出，精確模型 ID 未取得。這是一次 agent 行為抽查，不是多模型、多次抽樣或真人盲評，也沒有證明勝過競品。
 
+結果記錄中的 skill hash 對應行為測試當時的主檔；後續發布前只補授權 metadata 與來源聲明，沒有更動行為指令，也未將既有輸出冒稱為補聲明後重跑。
+
 checker 本身以 unittest 檢查片段遺失、版本不符、重複／未知案例、pending 與部分覆蓋等失敗；這些測試不算模型改稿案例。

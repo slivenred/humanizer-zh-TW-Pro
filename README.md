@@ -54,7 +54,7 @@ mkdir -p ~/.config/opencode/skills
 git clone https://github.com/slivenred/humanizer-zh-TW-Pro.git ~/.config/opencode/skills/humanizer-zh-tw-pro
 ```
 
-手動複製時，將 `SKILL.md` 和 `references/` 一起放進對應 skill 目錄。一般改稿讀主檔即可，完整範例按需載入；維護用 scripts 和 tests 不需在使用時執行。
+手動複製時，將 `SKILL.md`、`references/`、`LICENSE` 和 `THIRD_PARTY_NOTICES.md` 一起保留。一般改稿讀主檔即可，完整範例按需載入；維護用 scripts 和 tests 不需在使用時執行。
 
 ## 使用
 
@@ -242,6 +242,7 @@ python3 scripts/check_forward_outputs.py tests/results/2026-10-08-pro6.json
 - 修正計畫語氣與第一人稱範例；33 種模式與編號維持不變。
 - corpus 擴充至 42 組；新增實際輸出記錄、離線 literal checker、回歸測試與競品取捨文件。
 - 完整改稿範例移至按需載入的 reference；來源基準仍為 v2.8.2，本輪研究另檢視上游 main 的 v3.1.0。
+- 補齊第三方 notices 與 Wikipedia 衍生模式目錄的 CC BY-SA 4.0 範圍，保留 MIT 原創部分及上游聲明。
 
 ### 1.0.0-pro.5
 
@@ -278,7 +279,7 @@ python3 scripts/check_forward_outputs.py tests/results/2026-10-08-pro6.json
 
 ## 授權與來源
 
-MIT。
+原創程式、編輯指令與其他原創內容採 [MIT](LICENSE)。`SKILL.md` 的「33 種 AI 寫作模式」目錄及本頁對應模式表，作為 Wikipedia 來源鏈的在地化改作，依 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 發布；這些部分不因 repo 有 MIT LICENSE 而移除署名或相同方式分享條件。
 
 本專案是衍生版本，主要來源：
 
@@ -286,4 +287,4 @@ MIT。
 - [`kevintsai1202/Humanizer-zh-TW`](https://github.com/kevintsai1202/Humanizer-zh-TW)，MIT，作為既有繁中版本差異參考。
 - Wikipedia: [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)。
 
-若你公開發布 fork，請保留原 MIT copyright notice 與此來源說明。
+來源用途、著作權聲明與改作說明見 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。發布 fork 或複製 skill 時，保留原 MIT copyright／permission notice，以及 CC BY-SA 部分的署名、授權連結和變更說明。
